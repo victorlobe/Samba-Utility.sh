@@ -8,10 +8,20 @@ A simple interactive shell script to **start**, **stop**, **restart**, and **che
 
 ## 📦 Features
 
-- Interactive menu to control Samba
-- Starts both `smbd` and `nmbd` with your custom config
-- Clean output with colors and status indicators
-- Lightweight and dependency-free
+- Interactive menu to manage Samba services
+- Automatically detects Homebrew install location
+- Asks to install Samba via Homebrew if not found
+- Start, stop, restart `smbd` and `nmbd` easily
+- Check and display running status of both services
+- Show last 20 lines of the Samba log file
+- Validate your `smb.conf` file (syntax test)
+- Create timestamped backups of `smb.conf`
+- Start `smbd` manually in debug mode with increased logging
+- Open `smb.conf` location directly in Finder
+- Colored output for better readability
+- Status indicators (✅ / ❌) for quick overview
+- Clean error handling and feedback if something fails
+- Lightweight and dependency-free (pure bash)
 
 ---
 
@@ -24,7 +34,7 @@ A simple interactive shell script to **start**, **stop**, **restart**, and **che
 
 2. **Download the script:**
    ```bash
-   curl -o samba-utility.sh https://raw.githubusercontent.com/victorlobe/samba-utility.sh/
+   curl -o samba-utility.sh https://raw.githubusercontent.com/victorlobe/Samba-Utility.sh/main/Samba%20Utility.sh
    ```
 
 3. **Make it executable:**
@@ -62,7 +72,12 @@ Choose an option:
 2) Stop Samba
 3) Restart Samba
 4) Show Status
-5) Exit
+5) Show Last Logs
+6) Show config file in Finder
+7) Backup Configuration
+8) Test Configuration
+9) Run in Debug Mode
+10) Exit
 ```
 
 ---
@@ -72,11 +87,12 @@ Choose an option:
 - **Samba Config:** `/opt/homebrew/etc/smb.conf`
 - **smbd binary:** `/opt/homebrew/sbin/samba-dot-org-smbd`
 - **nmbd binary:** `/opt/homebrew/sbin/nmbd`
+- **Samba Logs:** `/opt/homebrew/var/log/samba/log.smbd`
 
-Make sure these match your Homebrew install. You can change them in the script if needed.
+*(These paths can be customized at the top of the script if needed.)*
 
 ---
 
 ## 📄 License
 
-MIT © [Victor Lobe]
+MIT © Victor Lobe
