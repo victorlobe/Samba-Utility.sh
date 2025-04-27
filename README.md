@@ -2,7 +2,7 @@
 
 A simple interactive shell script to **start**, **stop**, **restart**, and **check the status** of Samba and NetBIOS services (`smbd` / `nmbd`) installed via [Homebrew](https://brew.sh) on macOS.
 
-> Designed for macOS servers and Mac mini setups using Samba from `brew install samba`.
+> Designed for macOS servers or home network setups using Samba from `brew install samba`.
 
 ---
 
