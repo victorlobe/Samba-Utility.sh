@@ -72,7 +72,11 @@ start_samba() {
   check_config_file || return
 
   echo -e "${CYAN}Checking configuration...${NC}"
-  testparm "$SMB_CONF" || { echo -e "${RED}Invalid configuration file.${NC}"; return; }
+  # Only show errors, suppress normal dump
+  if ! testparm -s "$SMB_CONF" >/dev/null; then
+    echo -e "${RED}Invalid configuration file.${NC}"
+    return
+  fi
 
   echo -e "${CYAN}Starting smbd...${NC}"
   sudo "$SMBD" -s "$SMB_CONF" || { echo -e "${RED}Failed to start smbd${NC}"; return; }
@@ -83,18 +87,22 @@ start_samba() {
   echo -e "${GREEN}Samba started successfully.${NC}"
 }
 
-stop_samba() {
-  echo -e "${CYAN}Stopping Samba processes...${NC}"
-  sudo pkill -f "$SMBD"
-  sudo pkill -f "$NMBD"
-  echo -e "${GREEN}Samba stopped.${NC}"
-}
-
 restart_samba() {
   check_config_file || return
   stop_samba
   sleep 1
   start_samba
+}
+
+test_config() {
+  check_config_file || return
+  echo -e "${CYAN}Testing smb.conf...${NC}"
+  # Silent testparm
+  if ! testparm -s "$SMB_CONF" >/dev/null; then
+    echo -e "${RED}Configuration has errors.${NC}"
+  else
+    echo -e "${GREEN}smb.conf is valid.${NC}"
+  fi
 }
 
 status_samba() {
@@ -108,11 +116,6 @@ show_logs() {
   [[ -f "$LOG_FILE" ]] && tail -n 20 "$LOG_FILE" || echo -e "${RED}Log file not found.${NC}"
 }
 
-test_config() {
-  check_config_file || return
-  echo -e "${CYAN}Testing smb.conf...${NC}"
-  testparm "$SMB_CONF"
-}
 
 backup_config() {
   check_config_file || return
