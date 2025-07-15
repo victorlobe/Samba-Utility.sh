@@ -94,6 +94,13 @@ restart_samba() {
   start_samba
 }
 
+stop_samba() {
+  echo -e "${CYAN}Stopping Samba processes...${NC}"
+  sudo pkill -f "$SMBD"
+  sudo pkill -f "$NMBD"
+  echo -e "${GREEN}Samba stopped.${NC}"
+}
+
 test_config() {
   check_config_file || return
   echo -e "${CYAN}Testing smb.conf...${NC}"
